@@ -1,0 +1,18 @@
+Команда и коэффициенты => Ожидаемый результат
+
+1 python mathtool.py Вывод справки, код 0
+2 python mathtool.py --help Вывод справки, код 0
+3 python mathtool.py unknown ОШИБКА: неизвестная команда, код 1
+4 python mathtool.py solve -a 1 -b -3 -c 2 Квадратное; D=1; x1=2.000; x2=1.000
+5 python mathtool.py solve -a 1 -b -2 -c 1 Квадратное; D=0; x=1.000
+6 python mathtool.py solve -a 1 -b 0 -c 5 Квадратное; D=-20; действительных корней нет
+7 python mathtool.py solve -a 0 -b 2 -c -4 Линейное; x=2.000
+8 python mathtool.py solve -a 0 -b 0 -c 0 ОШИБКА: это не уравнение, код 1
+9 python mathtool.py solve -a 0 -b 0 -c 7 ОШИБКА: это не уравнение, код 1
+10 python mathtool.py solve -a abc -b 1 -c 1 ОШИБКА: коэффициент не является целым числом, код 1
+11 python mathtool.py solve -a 50000 -b 1 -c 1 ОШИБКА: значение вне диапазона, код 1
+12 python mathtool.py solve -a 1 -b 2 ОШИБКА: неверный набор параметров, код 1
+13 python mathtool.py solve -x 1 -b 2 -c 3 ОШИБКА: неверные флаги, код 1
+14 (интерактив) A=1,B=-3,C=2 Квадратное; D=1; x1=2.000; x2=1.000
+15 (интерактив) A=0,B=0,C=5 ОШИБКА: это не уравнение, код 1
+16 (интерактив) A=abc,B=1,C=1 ОШИБКА: коэффициент не является целым числом, код 1

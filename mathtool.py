@@ -5,7 +5,8 @@ from cli import build_parser
 def show_help():
     """Вывести справку по запуску программы."""
     print("mathtool --- решение уравнений вида A*x^2 + B*x + C = 0")
-    print("Также доступны статистика, суммы рядов и интегралы.")
+    print("Коэффициенты A, B, C - целые числа, по модулю не превышающие 10000.")
+    print("Ряды: third, sqplus. Функции интеграла: ratio, root.")
     print()
     print("Использование:")
     print("  python mathtool.py               вывод справки")
@@ -18,10 +19,7 @@ def show_help():
     print("  python mathtool.py series --func third --eps 0.0001   сумма по точности")
     print("  python mathtool.py integrate --func ratio --from 0 --to 20 --steps 1000   интеграл")
     print("  python mathtool.py <команда> --help   справка по выбранной команде")
-    print()
-    print("Коэффициенты A, B, C - целые числа, по модулю не превышающие 10000.")
-    print("Ряды: third, sqplus. Функции интеграла: ratio, root.")
-    print("Для завершения ввода stats нажмите Ctrl+Z, затем Enter.")
+
 
 
 def handle_solve(args):

@@ -1,18 +1,192 @@
-Команда и коэффициенты => Ожидаемый результат
+Тесты программы mathtool
 
-1 python mathtool.py Вывод справки, код 0
-2 python mathtool.py --help Вывод справки, код 0
-3 python mathtool.py unknown ОШИБКА: неизвестная команда, код 1
-4 python mathtool.py solve -a 1 -b -3 -c 2 Квадратное; D=1; x1=2.000; x2=1.000
-5 python mathtool.py solve -a 1 -b -2 -c 1 Квадратное; D=0; x=1.000
-6 python mathtool.py solve -a 1 -b 0 -c 5 Квадратное; D=-20; действительных корней нет
-7 python mathtool.py solve -a 0 -b 2 -c -4 Линейное; x=2.000
-8 python mathtool.py solve -a 0 -b 0 -c 0 ОШИБКА: это не уравнение, код 1
-9 python mathtool.py solve -a 0 -b 0 -c 7 ОШИБКА: это не уравнение, код 1
-10 python mathtool.py solve -a abc -b 1 -c 1 ОШИБКА: коэффициент не является целым числом, код 1
-11 python mathtool.py solve -a 50000 -b 1 -c 1 ОШИБКА: значение вне диапазона, код 1
-12 python mathtool.py solve -a 1 -b 2 ОШИБКА: неверный набор параметров, код 1
-13 python mathtool.py solve -x 1 -b 2 -c 3 ОШИБКА: неверные флаги, код 1
-14 (интерактив) A=1,B=-3,C=2 Квадратное; D=1; x1=2.000; x2=1.000
-15 (интерактив) A=0,B=0,C=5 ОШИБКА: это не уравнение, код 1
-16 (интерактив) A=abc,B=1,C=1 ОШИБКА: коэффициент не является целым числом, код 1
+Команды выполнять в PowerShell из папки проекта.
+В numbers.txt должны быть числа 4 1 5.
+stdin — ввод, stdout — обычный вывод, stderr — сообщения об ошибках.
+В записи stdin символы \n обозначают перевод строки.
+Код возврата проверяется командой $LASTEXITCODE сразу после запуска.
+
+Тест 1. Запуск без параметров
+Команда: python mathtool.py
+stdin: <пусто>
+stdout:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+
+Расчёты над уравнениями и числовыми последовательностями
+
+positional arguments:
+  {solve,stats,series,integrate}
+    solve               Решить уравнение
+    stats               Показатели последовательности
+    series              Сумма ряда
+    integrate           Численное интегрирование
+
+options:
+  -h, --help            show this help message and exit
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 2. Неизвестная команда
+Команда: python mathtool.py unknown
+stdin: <пусто>
+stdout:
+<пусто>
+stderr:
+usage: mathtool [-h] {solve,stats,series,integrate} ...
+mathtool: error: argument command: invalid choice: 'unknown' (choose from solve, stats, series, integrate)
+Код возврата: 2
+
+Тест 3. Квадратное уравнение с двумя корнями
+Команда: python mathtool.py solve -a 1 -b -3 -c 2
+stdin: <пусто>
+stdout:
+Уравнение квадратное
+Дискриминант: 1
+x1 = 2.000
+x2 = 1.000
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 4. Квадратное уравнение с одним корнем
+Команда: python mathtool.py solve -a 1 -b -2 -c 1
+stdin: <пусто>
+stdout:
+Уравнение квадратное
+Дискриминант: 0
+x = 1.000
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 5. Нет действительных корней
+Команда: python mathtool.py solve -a 1 -b 0 -c 5
+stdin: <пусто>
+stdout:
+Уравнение квадратное
+Дискриминант: -20
+Действительных корней нет
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 6. Линейное уравнение
+Команда: python mathtool.py solve -a 0 -b 2 -c -4
+stdin: <пусто>
+stdout:
+Уравнение линейное
+x = 2.000
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 7. Нет неизвестного
+Команда: python mathtool.py solve -a 0 -b 0 -c 7
+stdin: <пусто>
+stdout:
+<пусто>
+stderr:
+ОШИБКА: это не уравнение, неизвестное отсутствует
+Код возврата: 1
+
+Тест 8. Буква вместо коэффициента
+Команда: python mathtool.py solve -a abc -b 1 -c 1
+stdin: <пусто>
+stdout:
+<пусто>
+stderr:
+usage: mathtool solve [-h] [-a A] [-b B] [-c C]
+mathtool solve: error: argument -a: invalid int value: 'abc'
+Код возврата: 2
+
+Тест 9. Числа из файла
+Команда: python mathtool.py stats --input numbers.txt
+stdin: <пусто>
+stdout:
+Количество: 3
+Сумма: 10.000
+Ср. арифм.: 3.333
+Сумма кв.: 42.000
+Ср. кв.: 3.742
+Дисперсия: 2.889
+СКО: 1.700
+Станд. откл.: 2.082
+Наименьшее: 1.000
+Наибольшее: 5.000
+Положительных: 3
+Отрицательных: 0
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 10. Одно число
+Команда: "7" | python mathtool.py stats
+stdin: '7\n'
+stdout:
+Количество: 1
+Сумма: 7.000
+Ср. арифм.: 7.000
+Сумма кв.: 49.000
+Ср. кв.: 7.000
+Дисперсия: 0.000
+СКО: 0.000
+Станд. откл.: НЕ СУЩЕСТВУЕТ
+Наименьшее: 7.000
+Наибольшее: 7.000
+Положительных: 1
+Отрицательных: 0
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 11. Слово вместо числа
+Команда: "1 2 abc" | python mathtool.py stats
+stdin: '1 2 abc\n'
+stdout:
+<пусто>
+stderr:
+ОШИБКА: abc не является числом
+Код возврата: 1
+
+Тест 12. Ряд по количеству слагаемых
+Команда: python mathtool.py series --func sqplus --terms 6
+stdin: <пусто>
+stdout:
+S = 1/(1^2+1) - 1/(2^2+1) + 1/(3^2+1) - ...
+Слагаемых: 6
+Сумма ряда: 0.3526
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 13. Ряд по точности
+Команда: python mathtool.py series --func third --eps 0.0001
+stdin: <пусто>
+stdout:
+S = 1/3 - 1/6 + 1/9 - ...
+Слагаемых: 3334
+Сумма ряда: 0.2310
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 14. Интеграл функции ratio
+Команда: python mathtool.py integrate --func ratio --from 0 --to 20 --steps 1000
+stdin: <пусто>
+stdout:
+F(x) = x / (x + 1)
+Значение интеграла: 16.9459
+stderr:
+<пусто>
+Код возврата: 0
+
+Тест 15. Интеграл функции root
+Команда: python mathtool.py integrate --func root --from -4.9 --to 4.9 --steps 1000
+stdin: <пусто>
+stdout:
+F(x) = sqrt(x^2 + 1)
+Значение интеграла: 26.7976
+stderr:
+<пусто>
+Код возврата: 0

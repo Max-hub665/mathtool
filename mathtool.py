@@ -2,6 +2,28 @@ import sys
 from calc import equation, integration, series, stats
 from cli import build_parser
 
+def show_help():
+    """Вывести справку по запуску программы."""
+    print("mathtool --- решение уравнений вида A*x^2 + B*x + C = 0")
+    print("Также доступны статистика, суммы рядов и интегралы.")
+    print()
+    print("Использование:")
+    print("  python mathtool.py               вывод справки")
+    print("  python mathtool.py --help        вывод справки")
+    print("  python mathtool.py solve         ввод коэффициентов с клавиатуры")
+    print("  python mathtool.py solve -a 1 -b -3 -c 2   решение с заданными коэффициентами")
+    print("  python mathtool.py stats --input numbers.txt   обработка чисел из файла")
+    print("  python mathtool.py stats         чтение чисел из стандартного ввода")
+    print("  python mathtool.py series --func sqplus --terms 6   сумма по количеству слагаемых")
+    print("  python mathtool.py series --func third --eps 0.0001   сумма по точности")
+    print("  python mathtool.py integrate --func ratio --from 0 --to 20 --steps 1000   интеграл")
+    print("  python mathtool.py <команда> --help   справка по выбранной команде")
+    print()
+    print("Коэффициенты A, B, C - целые числа, по модулю не превышающие 10000.")
+    print("Ряды: third, sqplus. Функции интеграла: ratio, root.")
+    print("Для завершения ввода stats нажмите Ctrl+Z, затем Enter.")
+
+
 def handle_solve(args):
     """Получить коэффициенты и вывести решение уравнения"""
     # Без коэффициентов запрашиваем их с клавиатуры.
@@ -92,10 +114,13 @@ HANDLERS = {
 
 def main(argv):
     """Выполнить команду и вернуть код завершения"""
+    if argv == ["--help"] or argv == ["-h"]:
+        show_help()
+        return 0
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.command is None:
-        parser.print_help()
+        show_help()
         return 0
     try:
         return HANDLERS[args.command](args)

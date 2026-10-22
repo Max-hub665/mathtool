@@ -2,7 +2,7 @@ import math
 
 MAX_TERMS = 10000
 MAX_EPS = 0.0001
-MAX_ITERATIONS = 100_000
+MAX_ITERATIONS = 100000
 DIGITS = math.ceil(-math.log10(MAX_EPS))
 
 def sign(n):
